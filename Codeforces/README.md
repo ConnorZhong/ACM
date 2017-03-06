@@ -1,3 +1,3 @@
 # Codeforces Source Code
 
-Solved 5
+Solved 6
