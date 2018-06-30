@@ -1,4 +1,4 @@
 # Codeforces Source Code
 
-Solved $6$
+Solved $7$
 
