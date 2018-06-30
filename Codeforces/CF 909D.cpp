@@ -1,0 +1,95 @@
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <cstring>
+#include <map>
+#include <cstdlib>
+#include <cmath>
+#include <string>
+#include <algorithm>
+#include <set>
+#include <stack>
+#include <queue>
+#include <utility>
+#include <cassert>
+#include <bitset>
+#define all(x) (x).begin(),(x).end()
+#define SZ(x) ((int)(x).size())
+#define fi first
+#define se second
+#define pb push_back
+#define mkp make_pair
+#define rep(i,a,b) for (int i=(a);i<(b);i++)
+#define per(i,a,b) for (int i=(b)-1;i>=(a);i--)
+#define REP(i,a,b) for (int i=(a);i<=(b);i++)
+#define PER(i,a,b) for (int i=(b);i>=(a);i--)
+#define de(x) cout<<">> "<<#x<<" = "<<x<<endl;
+using namespace std;
+typedef long long LL;
+LL powmod(LL a,LL b,LL mod) {LL res=1;a%=mod; assert(b>=0); for(;b;b>>=1){if(b&1)res=res*a%mod;a=a*a%mod;}return res;}
+LL gcd(LL a, LL b) {if (b==0)return a;else return gcd(b,a%b);}
+const int INF = 0x3f3f3f3f;
+const int MAXN = 1000005; // 1e6;
+int pre[MAXN], nxt[MAXN], n, now;
+char ch[MAXN];
+int on[MAXN];
+queue<int> qqq[2];
+bool check(int i)
+{
+	if (~pre[i] && ch[pre[i]]!=ch[i]) return true; 
+	if (~nxt[i] && ch[nxt[i]]!=ch[i]) return true;
+	return false; 
+}
+void del(int i)
+{
+	if (on[i] > 1) return ;
+	if (~pre[i]) 
+	{
+		nxt[pre[i]]=nxt[i];
+		if (!on[pre[i]]) qqq[now].push(pre[i]);
+	} 
+	if (~nxt[i]) 
+	{
+		pre[nxt[i]]=pre[i];
+		if (!on[nxt[i]]) qqq[now].push(nxt[i]);
+	}
+	on[i]++;
+}
+int main()
+{
+	// freopen("in.txt","r",stdin);
+	scanf("%s",ch);
+	int n = strlen(ch);
+	rep(i, 0, n)
+	{
+		pre[i]=i-1;
+		nxt[i]=i+1;
+		qqq[now^1].push(i);
+	}
+	nxt[n-1]=-1;
+
+	now^=1;
+	int ans = 0;
+	while(!qqq[now].empty())
+	{
+		ans ++;
+		while(!qqq[now].empty())
+		{
+			int x = qqq[now].front();
+			// de(x)
+			qqq[now].pop();
+			if (!on[x]&&check(x) ) qqq[now^1].push(x), on[x] = 1;
+		}
+		if (qqq[now^1].empty()) ans --;
+		while(!qqq[now^1].empty())
+		{
+			int x = qqq[now^1].front();
+			qqq[now^1].pop();
+			del(x);
+			// de(x)
+		}
+	}
+	printf("%d\n",ans);
+	return 0;
+}
+
