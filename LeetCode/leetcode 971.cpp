@@ -49,14 +49,20 @@ const int MAXN = 1000005; // 1e6;
 bool flag = true;
 int dfs(TreeNode* u, int i, vector<int> &voyage, vector<int>& ans)
 {
+        if (u == NULL) return i-1;
         if (u->val != voyage[i]) 
         {
                 flag=false;return i;
         }
-        if (TreeNode->left->val != voyage[i+1]) ans.pb(u -> val);
-        swap(TreeNode->left, TreeNode->right);
-        i = dfs(TreeNode->left, i+1, voyage, ans);
-        i = dfs(TreeNode->right, i+1, voyage, ans); 
+        if (u->left==NULL);
+        else if (u->left->val != voyage[i+1]) 
+        {
+            ans.pb(u->val);
+            swap(u->left, u->right);
+        }
+        i = dfs(u->left, i+1, voyage, ans);
+        i = dfs(u->right, i+1, voyage, ans); 
+        return i;
 }
 class Solution {
 public:

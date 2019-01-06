@@ -47,11 +47,13 @@ public:
         {
                 a.pb(X);
                 X = X*x;
+                if (X == 1) break;
         }
         while(Y <= bound)
         {
                 b.pb(Y);
                 Y = Y*y;
+                if (Y == 1) break;
         }
         vector<int> ans;
         for (int u : a)
@@ -60,7 +62,7 @@ public:
                         if (u+ v <= bound) ans.pb(u+v); 
                 }
         sort(ans.begin(),ans.end());
-        erase(unique(ans.begin(),ans.end()),ans.end());
+        ans.erase(unique(ans.begin(),ans.end()),ans.end());
         return ans;
     }
 };
